@@ -1,23 +1,26 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Filters from "./components/Filters";
 import postsItems from "./static/posts";
 
 export default function App() {
-    const [filter, updateFilter] = useState({selected: 'all'});
+    const [filter, updateFilter] = useState( 'all');
     const [posts, setPosts] = useState({sorted: [...postsItems]});
 
     const filters = ['all', 'Websites', 'Flayers', 'Business Cards'];
 
-    function changeFilter(filter) {
-        updateFilter({ selected: filter });
-        filterPosts();
+    function changeFilter(newFilter) {
+        updateFilter(newFilter);
     }
 
+    useEffect(() => {
+        filterPosts();
+    }, [filter]);
+
     function filterPosts() {
-        if (filter.selected === 'all') {
+        if (filter === 'all') {
             setPosts({ sorted: postsItems} );
         } else {
-            const filtered = postsItems.filter((post) => post.category === filter.selected);
+            const filtered = postsItems.filter((post) => post.category === filter);
             setPosts({ sorted: filtered });
         }
     }
@@ -28,7 +31,7 @@ export default function App() {
 
     return (
         <>
-            <Filters selected={filter.selected} handler={changeFilter} items={filters}/>
+            <Filters selected={filter} handler={(s) => changeFilter(s)} items={filters}/>
             <div className="s-posts__container">
                 <div className="s-posts__column">
                     {spreadPosts(1).map((post, index) =>
