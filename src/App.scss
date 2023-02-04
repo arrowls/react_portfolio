@@ -1,13 +1,16 @@
+$column-gap: 10px;
+
 .s-posts {
   &__container {
-    display: flex;
-    gap: 1rem;
+    columns: 3 auto; // сколько изучаю CSS, но такое встречаю впервые
+    // На работе была такая же задача, нужно поправить, пока тимлид не заметил
+    column-gap: $column-gap;
+    font-size: 0;
   }
 
-  &__column {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  &__img {
+    width: 100%;
+    margin-bottom: $column-gap;
   }
 }
 
@@ -34,4 +37,3 @@
     }
   }
 }
-
